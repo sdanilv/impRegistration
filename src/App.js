@@ -1,26 +1,20 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import Registration from './components/Registration';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="App" style={style}>
+      <Registration />
     </div>
   );
 }
-
+const style = {
+  margin:"auto",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  flexDirection:"column",
+  height: "50%",
+  width:"30%"
+};
 export default App;
