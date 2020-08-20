@@ -6,16 +6,51 @@ import FinalForm from "./Forms/FinalForm";
 import ProfileForm from "./Forms/ProfileForm";
 import ServiceForm from "./Forms/ServiceForm";
 
-const Switch = ({ setSubmitHandler, pageNumber }) => {
+const Switch = ({
+  service,
+  endpoint,
+  email,
+  personal,
+  setSubmitHandler,
+  pageNumber,
+  setService,
+  setEndpoint,
+  setEmail,
+  setPersonal,
+}) => {
   switch (pageNumber) {
     case 0:
-      return <ServiceForm setSubmitHandler={setSubmitHandler} />;
+      return (
+        <ServiceForm
+          service={service}
+          setService={setService}
+          setSubmitHandler={setSubmitHandler}
+        />
+      );
     case 1:
-      return <EndpointForm setSubmitHandler={setSubmitHandler} />;
+      return (
+        <EndpointForm
+          endpoint={endpoint}
+          setEndpoint={setEndpoint}
+          setSubmitHandler={setSubmitHandler}
+        />
+      );
     case 2:
-      return <EmailForm setSubmitHandler={setSubmitHandler} />;
+      return (
+        <EmailForm
+          email={email}
+          setEmail={setEmail}
+          setSubmitHandler={setSubmitHandler}
+        />
+      );
     case 3:
-      return <ProfileForm setSubmitHandler={setSubmitHandler} />;
+      return (
+        <ProfileForm
+          personal={personal}
+          setPersonal={setPersonal}
+          setSubmitHandler={setSubmitHandler}
+        />
+      );
     case 4:
       return <CardForm setSubmitHandler={setSubmitHandler} />;
     case 5:

@@ -1,48 +1,59 @@
-import { Input } from "antd";
+import { Form } from "antd";
 import { useFormik } from "formik";
-import React from "react";
-import {useEffect} from 'react';
+import React, { useEffect } from "react";
+import * as Yup from "yup";
+import ValidInput from "../common/ValidInput";
 
-const EndpointForm = ({setSubmitHandler}) => {
-  const { handleSubmit, handleChange, values, submitForm } = useFormik({
-    initialValues: {
-      endpointName: "",
-      endpointPrice: "",
-      endpointCount: "",
-    },
+const EndpointValidationSchema = Yup.object().shape({
+  endpointName: Yup.string().required("Введите имя"),
+  endpointPrice: Yup.string()
+    .matches(/\d\.?\d$/, "Не верный формат")
+    .required("Введите цену"),
+  endpointCount: Yup.string()
+    .matches(/\d$/, "Не верный формат")
+    .required("Введите количество"),
+});
+
+const EndpointForm = ({ setSubmitHandler, setEndpoint, endpoint }) => {
+  const { handleSubmit, submitForm, ...formik } = useFormik({
+    initialValues: endpoint,
+    validationSchema: EndpointValidationSchema,
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      setEndpoint(values);
     },
   });
 
-  useEffect(()=>{
-    setSubmitHandler(()=>submitForm);
-  },[])
+  useEffect(() => {
+    setSubmitHandler(() => submitForm);
+  }, []);
 
   return (
-    <form onSubmit={handleSubmit} >
-      <Input
+    <Form
+      labelCol={{ span: 8 }}
+      wrapperCol={{ span: 16 }}
+      onSubmit={handleSubmit}
+    >
+      <ValidInput
         name="endpointName"
-        placeholder="Имя endpoint"
-        value={values.endpointName}
-        onChange={handleChange}
+        placeholder="Endpoint 12334 "
+        label="Название товара"
+        formik={formik}
       />
-      <Input
-        prefix="₴"
-        suffix="грн"
+      <ValidInput
         name="endpointPrice"
-        placeholder="Цена endpoint"
-        value={values.endpointPrice}
-        onChange={handleChange}
+        placeholder="24"
+        label="Цена"
+        formik={formik}
+        suffix="грн"
       />
-      <Input
-        suffix="шт"
+      <ValidInput
         name="endpointCount"
-        placeholder="Количество endpoint"
-        value={values.endpointCount}
-        onChange={handleChange}
+        placeholder="5"
+        label="Количество"
+        formik={formik}
+        suffix="шт"
       />
-    </form>
+    </Form>
   );
 };
 

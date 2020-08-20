@@ -1,27 +1,59 @@
-import {createSlice} from "@reduxjs/toolkit";
-
+import { createSlice } from "@reduxjs/toolkit";
 
 const registrationSlice = createSlice({
   name: "registration",
   initialState: {
-    serviceName: "",
-    serviceDescription: "",
-
-    endpointName: "",
-    endpointPrice: "",
-    endpointCount: "",
-
+    pageNumber: 1,
+    service: {
+      serviceName: "",
+      serviceDescription: "",
+    },
+    endpoint: {
+      endpointName: "",
+      endpointPrice: "",
+      endpointCount: "",
+    },
     email: "",
-    password: "",
-
-    address: "",
-    site: "",
-    name: "",
-    telephone: "",
-    birthday: "",
-    INN: "",
-    postIndex: "",
+    personal: {
+      address: "",
+      site: "",
+      name: "",
+      telephone: "",
+      birthday: "",
+      INN: "",
+      postIndex: "",
+    },
   },
-  reducers: {}})
-export default  registrationSlice
+  reducers: {
+    setService(state, { payload }) {
+      state.service = { ...payload };
+      state.pageNumber++;
+    },
+    prevPage(state) {
+      state.pageNumber--;
+    },
+    setEndpoint(state, { payload }) {
+      state.endpoint = { ...payload };
+      state.pageNumber++;
+    },
+    setEmail(state, { payload }) {
+      state.email = payload.email;
+      state.pageNumber++;
+    },
+    setPersonal(state, { payload }) {
+      state.personal = { ...state.personal, ...payload };
+      state.pageNumber++;
+    },
+  },
+});
 
+const { actions, reducer } = registrationSlice;
+export const {
+  setService,
+  setEndpoint,
+  setEmail,
+  setPersonal,
+  prevPage,
+} = actions;
+
+export default reducer;

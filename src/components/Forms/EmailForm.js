@@ -1,40 +1,42 @@
-import {Input} from 'antd';
-import React from 'react';
-import { useFormik } from 'formik';
-import {useEffect} from 'react';
-const EmailForm = ({setSubmitHandler}) =>{
-  const { handleSubmit, handleChange, values,submitForm } = useFormik({
+import { Form } from "antd";
+import React, { useEffect } from "react";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import ValidInput from "../common/ValidInput";
+
+const EmailValidationSchema = Yup.object().shape({
+  email: Yup.string().email("Неверный имейл").required("Введите имейл"),
+});
+
+const EmailForm = ({ setSubmitHandler, setEmail, email }) => {
+  const { handleSubmit, submitForm, ...formik } = useFormik({
     initialValues: {
-      email: "",
-      password: "",
+      email,
     },
+    validationSchema: EmailValidationSchema,
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      setEmail(values);
     },
   });
-  useEffect(()=>{
-    setSubmitHandler(()=>submitForm);
-  },[])
+  useEffect(() => {
+    setSubmitHandler(() => submitForm);
+  }, []);
 
   return (
-      <form onSubmit={handleSubmit} >
-        <Input
-            type="email"
-            name="email"
-            placeholder="email"
-            value={values.email}
-            onChange={handleChange}
-        />
-        <Input
-            type="password"
-            name="password"
-            placeholder="Пароль"
-            value={values.password}
-            onChange={handleChange}
-        />
-
-      </form>
+    <Form
+      labelCol={{ span: 8 }}
+      wrapperCol={{ span: 16 }}
+      onSubmit={handleSubmit}
+    >
+      <ValidInput
+        name="email"
+        placeholder="user@gmail.com "
+        label="Email"
+        formik={formik}
+        type="email"
+      />
+    </Form>
   );
-}
+};
 
 export default EmailForm;

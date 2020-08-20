@@ -1,29 +1,53 @@
-
 import React, { useState } from "react";
 import NavigationButton from "./NavigationButton";
 import RegistrSteps from "./RegistrSteps";
 import Switch from "./Switch";
+import { connect } from "react-redux";
+import {
+  prevPage,
+  setEmail,
+  setEndpoint,
+  setPersonal,
+  setService,
+} from "../redux/reducer";
 
-const Registration = (props) => {
-  const [current, setCurrent] = useState(0);
+const Registration = ({prevPage, pageNumber, ...formsEvent }) => {
   const [submitHandler, setSubmitHandler] = useState(null);
 
   return (
     <>
-      <RegistrSteps current={current} />
+      <RegistrSteps pageNumber={pageNumber} />
       <div style={style}>
-        <Switch setSubmitHandler={setSubmitHandler} pageNumber={current} />
+        <Switch
+          {...formsEvent}
+          setSubmitHandler={setSubmitHandler}
+          pageNumber={pageNumber}
+        />
       </div>
       <NavigationButton
+        prevPage={prevPage}
         submitHandler={submitHandler}
-        current={current}
-        setCurrent={setCurrent}
+        pageNumber={pageNumber}
       />
     </>
   );
 };
 
 const style = {
-  margin: 20,
+  margin: "auto",
+  marginTop: 10,
+
+  height: "50%",
+  width: "500px",
 };
-export default Registration;
+
+const mstp = (state) => (
+state
+);
+export default connect(mstp, {
+  setService,
+  setEndpoint,
+  setEmail,
+  setPersonal,
+  prevPage,
+})(Registration);

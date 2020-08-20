@@ -1,73 +1,93 @@
-import { Input } from "antd";
+import { Form, Input } from "antd";
 import { useFormik } from "formik";
-import React from "react";
-import {useEffect} from 'react';
+import React, { useEffect } from "react";
+
+import * as Yup from "yup";
+import ValidInput from "../common/ValidInput";
+
 const { TextArea } = Input;
-const ProfileForm = ({setSubmitHandler}) => {
-  const { handleSubmit, handleChange, values, submitForm } = useFormik({
-    initialValues: {
-      address: "",
-      site: "",
-      name: "",
-      telephone: "",
-      birthday: "",
-      INN: "",
-      postIndex: "",
-    },
+const EndpointValidationSchema = Yup.object().shape({
+  name: Yup.string()
+    .matches(/.+\s.+\s.+/, "Введите ФИО в формате Иванов Иван Иванович")
+    .required("Введите ФИО"),
+  birthday: Yup.string()
+    .matches(/\d\d\.\d\d.\d{4}/, "Дата должна быть в формате 31.12.2020")
+    .required("Введите день рождения"),
+  telephone: Yup.string()
+    .matches(/\+38\d{10}/, "Телефон должен быть в формате +380661234567")
+    .required("Введите номер телефона"),
+  INN: Yup.string()
+    .matches(/\d{10}/, "Не верный ИНН")
+    .required("Введите ИНН"),
+  postIndex: Yup.string()
+    .matches(/\d{5}/, "Неверный индекс")
+    .required("Введите свой индекс"),
+  address: Yup.string().required("Введите свой адрес")
+});
+
+const ProfileForm = ({ setSubmitHandler, setPersonal, personal }) => {
+  const { handleSubmit, submitForm, ...formik } = useFormik({
+    initialValues: personal,
+    validationSchema: EndpointValidationSchema,
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      setPersonal(values);
     },
   });
 
-  useEffect(()=>{
-    setSubmitHandler(()=>submitForm);
-  },[])
-
+  useEffect(() => {
+    setSubmitHandler(() => submitForm);
+  }, []);
 
   return (
-    <form onSubmit={handleSubmit}>
-      <Input
-        name="address"
-        placeholder="Адрес проживания"
-        value={values.address}
-        onChange={handleChange}
-      />
-      <Input
-        name="site"
-        placeholder="Имя сервиса"
-        value={values.site}
-        onChange={handleChange}
-      />
-      <Input
+    <Form
+      labelCol={{ span: 8 }}
+      wrapperCol={{ span: 16 }}
+      onSubmit={handleSubmit}
+    >
+      <ValidInput
         name="name"
-        placeholder="Имя сервиса"
-        value={values.name}
-        onChange={handleChange}
+        placeholder="Иванов Иван Иванович"
+        label="ФИО"
+        formik={formik}
       />
-      <Input
+
+      <ValidInput
         name="telephone"
-        placeholder="Имя сервиса"
-        value={values.telephone}
-        onChange={handleChange}
+        placeholder="+380661234567"
+        label="Телефон"
+        formik={formik}
       />
-      <Input
+      <ValidInput
         name="birthday"
-        placeholder="Имя сервиса"
-        value={values.birthday}
-        onChange={handleChange}
+        placeholder="31.10.1993"
+        label="День рождения"
+        formik={formik}
       />
-      <Input
+      <ValidInput
         name="INN"
-        placeholder="Имя сервиса"
-        value={values.INN}
-        onChange={handleChange}
-      /> <Input
-        name="postIndex"
-        placeholder="Имя сервиса"
-        value={values.postIndex}
-        onChange={handleChange}
+        placeholder="1234567890"
+        label="ИНН"
+        formik={formik}
       />
-    </form>
+      <ValidInput
+          name="site"
+          placeholder="mysite.com"
+          label="Адрес сайта"
+          formik={formik}
+      />
+      <ValidInput
+          name="address"
+          placeholder="Киев, Шолом-Алейхема 20/17"
+          label="Адрес проживания"
+          formik={formik}
+      />
+      <ValidInput
+        name="postIndex"
+        placeholder="12345"
+        label="Индекс"
+        formik={formik}
+      />
+    </Form>
   );
 };
 export default ProfileForm;

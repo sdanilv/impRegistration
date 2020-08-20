@@ -1,30 +1,24 @@
 import { Button, message } from "antd";
 import React from "react";
 
-const NavigationButton = ({ current, setCurrent, submitHandler }) => {
-  const next = () => {
-    setCurrent(current + 1);
-    submitHandler();
-  };
-  const prev = () => setCurrent(current - 1);
-
+const NavigationButton = ({ pageNumber,  submitHandler, prevPage }) => {
   return (
     <div>
-      {current < 6 ? (
-        <Button type="submit" type="primary" onClick={next}>
-          Next
+      {pageNumber < 6 ? (
+        <Button type="primary" onClick={submitHandler}>
+          Далее
         </Button>
       ) : (
         <Button
           type="primary"
           onClick={() => message.success("Processing complete!")}
         >
-          Done
+          Готово
         </Button>
       )}
-      {!!current && (
-        <Button style={{ margin: "0 8px" }} onClick={prev}>
-          Previous
+      {!!pageNumber && (
+        <Button style={{ margin: "0 8px" }} onClick={() => prevPage()}>
+          Назад
         </Button>
       )}
     </div>

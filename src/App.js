@@ -9,12 +9,6 @@ function App() {
   );
 }
 const style = {
-  margin:"auto",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  flexDirection:"column",
-  height: "50%",
-  width:"30%"
+margin:"20px"
 };
 export default App;

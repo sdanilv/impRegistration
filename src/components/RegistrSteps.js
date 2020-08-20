@@ -11,15 +11,15 @@ import { Steps } from "antd";
 import React from "react";
 const { Step } = Steps;
 
-const RegistrSteps = ({ current }) => (
-  <Steps current={current}>
-    <Step title="Сервис" icon={<PieChartOutlined />} />
-    <Step title="Endpoint" icon={<AccountBookOutlined />} />
-    <Step title="Email" icon={<MailOutlined />} />
+const RegistrSteps = ({ pageNumber }) => (
+  <Steps current={pageNumber}>
+    <Step title="Магазин" icon={<PieChartOutlined />} />
+    <Step title="Товар" icon={<AccountBookOutlined />} />
+    <Step title="Имейл" icon={<MailOutlined />} />
     <Step title="Профиль" icon={<ContactsOutlined />} />
     <Step title="Платежная карта" icon={<CreditCardOutlined />} />
     <Step title="Модерация" icon={<LoadingOutlined />} />
-    <Step title="Done" icon={<SmileOutlined />} />
+    <Step title="Готово" icon={<SmileOutlined />} />
   </Steps>
 );
 
