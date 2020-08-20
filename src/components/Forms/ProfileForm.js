@@ -1,11 +1,10 @@
-import { Form, Input } from "antd";
+import { Form } from "antd";
 import { useFormik } from "formik";
 import React, { useEffect } from "react";
 
 import * as Yup from "yup";
 import ValidInput from "../common/ValidInput";
 
-const { TextArea } = Input;
 const EndpointValidationSchema = Yup.object().shape({
   name: Yup.string()
     .matches(/.+\s.+\s.+/, "Введите ФИО в формате Иванов Иван Иванович")
@@ -14,7 +13,7 @@ const EndpointValidationSchema = Yup.object().shape({
     .matches(/\d\d\.\d\d.\d{4}/, "Дата должна быть в формате 31.12.2020")
     .required("Введите день рождения"),
   telephone: Yup.string()
-    .matches(/\+38\d{10}/, "Телефон должен быть в формате +380661234567")
+    .matches(/\d{10}/, "Телефон должен быть в формате 0661234567")
     .required("Введите номер телефона"),
   INN: Yup.string()
     .matches(/\d{10}/, "Не верный ИНН")
@@ -22,7 +21,7 @@ const EndpointValidationSchema = Yup.object().shape({
   postIndex: Yup.string()
     .matches(/\d{5}/, "Неверный индекс")
     .required("Введите свой индекс"),
-  address: Yup.string().required("Введите свой адрес")
+  address: Yup.string().required("Введите свой адрес"),
 });
 
 const ProfileForm = ({ setSubmitHandler, setPersonal, personal }) => {
@@ -36,7 +35,7 @@ const ProfileForm = ({ setSubmitHandler, setPersonal, personal }) => {
 
   useEffect(() => {
     setSubmitHandler(() => submitForm);
-  }, []);
+  }, [setSubmitHandler, submitForm]);
 
   return (
     <Form
@@ -53,7 +52,8 @@ const ProfileForm = ({ setSubmitHandler, setPersonal, personal }) => {
 
       <ValidInput
         name="telephone"
-        placeholder="+380661234567"
+        prefix="+38"
+        placeholder="0661234567"
         label="Телефон"
         formik={formik}
       />
@@ -70,16 +70,16 @@ const ProfileForm = ({ setSubmitHandler, setPersonal, personal }) => {
         formik={formik}
       />
       <ValidInput
-          name="site"
-          placeholder="mysite.com"
-          label="Адрес сайта"
-          formik={formik}
+        name="site"
+        placeholder="mysite.com"
+        label="Адрес сайта"
+        formik={formik}
       />
       <ValidInput
-          name="address"
-          placeholder="Киев, Шолом-Алейхема 20/17"
-          label="Адрес проживания"
-          formik={formik}
+        name="address"
+        placeholder="Киев, Шолом-Алейхема 20/17"
+        label="Адрес проживания"
+        formik={formik}
       />
       <ValidInput
         name="postIndex"

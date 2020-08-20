@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const registrationSlice = createSlice({
   name: "registration",
   initialState: {
-    pageNumber: 1,
+    pageNumber: 0,
     service: {
       serviceName: "",
       serviceDescription: "",
