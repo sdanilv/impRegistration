@@ -8,11 +8,10 @@ import {
   setEmail,
   setEndpoint,
   setPersonal,
-  setService,
-} from "../redux/reducer";
+  setService, setSubmitHandler,
+} from '../redux/reducer';
 
-const Registration = ({prevPage, pageNumber, ...formsEvent }) => {
-  const [submitHandler, setSubmitHandler] = useState(null);
+const Registration = ({prevPage, pageNumber, submitHandler,  ...formsEvent }) => {
 
   return (
     <>
@@ -50,4 +49,5 @@ export default connect(mstp, {
   setEmail,
   setPersonal,
   prevPage,
+  setSubmitHandler
 })(Registration);

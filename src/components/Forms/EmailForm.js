@@ -2,6 +2,7 @@ import { Form } from "antd";
 import React, { useEffect } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { useCustomFormik } from "../../hooks/useCastomFormik";
 import ValidInput from "../common/ValidInput";
 
 const EmailValidationSchema = Yup.object().shape({
@@ -9,18 +10,14 @@ const EmailValidationSchema = Yup.object().shape({
 });
 
 const EmailForm = ({ setSubmitHandler, setEmail, email }) => {
-  const { handleSubmit, submitForm, ...formik } = useFormik({
+  const { handleSubmit, ...formik } = useCustomFormik({
     initialValues: {
       email,
     },
     validationSchema: EmailValidationSchema,
-    onSubmit: (values) => {
-      setEmail(values);
-    },
+    setSubmitHandler,
+    submitCallback: setEmail,
   });
-  useEffect(() => {
-    setSubmitHandler(() => submitForm);
-  }, []);
 
   return (
     <Form

@@ -4,6 +4,7 @@ const registrationSlice = createSlice({
   name: "registration",
   initialState: {
     pageNumber: 0,
+    submitHandler: null,
     service: {
       serviceName: "",
       serviceDescription: "",
@@ -44,11 +45,15 @@ const registrationSlice = createSlice({
       state.personal = { ...state.personal, ...payload };
       state.pageNumber++;
     },
+    setSubmitHandler(state, { payload }) {
+      state.submitHandler = payload;
+    },
   },
 });
 
 const { actions, reducer } = registrationSlice;
 export const {
+  setSubmitHandler,
   setService,
   setEndpoint,
   setEmail,
