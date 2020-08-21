@@ -7,7 +7,7 @@ import ValidInput from "../common/ValidInput";
 const EndpointValidationSchema = Yup.object().shape({
   endpointName: Yup.string().required("Введите имя"),
   endpointPrice: Yup.string()
-    .matches(/^[0-9]+[.]?[0-9]+$/, "Не верный формат")
+    .matches(/^[0-9]+[.]?[0-9]*$/, "Не верный формат")
     .required("Введите цену"),
   endpointCount: Yup.string()
     .matches(/^\d+$/, "Не верный формат")

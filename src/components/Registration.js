@@ -10,14 +10,15 @@ import {
   setPersonal,
   setService,
 } from "../redux/reducer";
+import style from "./Registration.module.css";
 
-const Registration = ({prevPage, pageNumber, ...formsEvent }) => {
+const Registration = ({ prevPage, pageNumber, ...formsEvent }) => {
   const [submitHandler, setSubmitHandler] = useState(null);
 
   return (
     <>
       <RegistrSteps pageNumber={pageNumber} />
-      <div style={style}>
+      <div className={style.form}>
         <Switch
           {...formsEvent}
           setSubmitHandler={setSubmitHandler}
@@ -33,17 +34,7 @@ const Registration = ({prevPage, pageNumber, ...formsEvent }) => {
   );
 };
 
-const style = {
-  margin: "auto",
-  marginTop: 10,
-
-  height: "50%",
-  width: "500px",
-};
-
-const mstp = (state) => (
-state
-);
+const mstp = (state) => state;
 export default connect(mstp, {
   setService,
   setEndpoint,

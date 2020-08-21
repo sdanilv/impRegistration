@@ -1,5 +1,5 @@
-import React from 'react';
-import Registration from './components/Registration';
+import React from "react";
+import Registration from "./components/Registration";
 
 function App() {
   return (
@@ -8,7 +8,8 @@ function App() {
     </div>
   );
 }
+
 const style = {
-margin:"20px"
+  margin: "20px",
 };
 export default App;

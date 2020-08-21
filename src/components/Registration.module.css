@@ -1,0 +1,11 @@
+.form {
+  margin: 10px auto;
+  height: 50%;
+  width: 500px;
+}
+
+@media all and (max-width: 600px) {
+  .form {
+    width: 300px;
+  }
+}

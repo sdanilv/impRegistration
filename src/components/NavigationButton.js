@@ -1,7 +1,7 @@
 import { Button, message } from "antd";
 import React from "react";
 
-const NavigationButton = ({ pageNumber,  submitHandler, prevPage }) => {
+const NavigationButton = ({ pageNumber, submitHandler, prevPage }) => {
   return (
     <div>
       {pageNumber < 6 ? (
