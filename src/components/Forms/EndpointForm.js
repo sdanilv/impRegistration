@@ -1,8 +1,8 @@
 import { Form } from "antd";
-import { useFormik } from "formik";
-import React, { useEffect } from "react";
+import React from "react";
 import * as Yup from "yup";
 import ValidInput from "../common/ValidInput";
+import {useCustomFormik} from "../../hooks/useCastomFormik";
 
 const EndpointValidationSchema = Yup.object().shape({
   endpointName: Yup.string().required("Введите имя"),
@@ -15,17 +15,12 @@ const EndpointValidationSchema = Yup.object().shape({
 });
 
 const EndpointForm = ({ setSubmitHandler, setEndpoint, endpoint }) => {
-  const { handleSubmit, submitForm, ...formik } = useFormik({
+  const { handleSubmit, ...formik } = useCustomFormik({
     initialValues: endpoint,
     validationSchema: EndpointValidationSchema,
-    onSubmit: (values) => {
-      setEndpoint(values);
-    },
+    setSubmitHandler,
+    submitCallback: setEndpoint,
   });
-
-  useEffect(() => {
-    setSubmitHandler(() => submitForm);
-  }, [setSubmitHandler, submitForm]);
 
   return (
     <Form

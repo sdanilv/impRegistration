@@ -1,9 +1,8 @@
+import React from "react";
 import { Form } from "antd";
-import { useFormik } from "formik";
-import React, { useEffect } from "react";
-
 import * as Yup from "yup";
 import ValidInput from "../common/ValidInput";
+import { useCustomFormik } from "../../hooks/useCastomFormik";
 
 const EndpointValidationSchema = Yup.object().shape({
   name: Yup.string()
@@ -25,17 +24,12 @@ const EndpointValidationSchema = Yup.object().shape({
 });
 
 const ProfileForm = ({ setSubmitHandler, setPersonal, personal }) => {
-  const { handleSubmit, submitForm, ...formik } = useFormik({
+  const { handleSubmit, ...formik } = useCustomFormik({
     initialValues: personal,
     validationSchema: EndpointValidationSchema,
-    onSubmit: (values) => {
-      setPersonal(values);
-    },
+    setSubmitHandler,
+    submitCallback: setPersonal,
   });
-
-  useEffect(() => {
-    setSubmitHandler(() => submitForm);
-  }, [setSubmitHandler, submitForm]);
 
   return (
     <Form
@@ -49,7 +43,6 @@ const ProfileForm = ({ setSubmitHandler, setPersonal, personal }) => {
         label="ФИО"
         formik={formik}
       />
-
       <ValidInput
         name="telephone"
         prefix="+38"

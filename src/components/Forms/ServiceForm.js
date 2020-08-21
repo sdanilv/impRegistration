@@ -1,9 +1,9 @@
 import { Form } from "antd";
-import { useFormik } from "formik";
-import React, { useEffect } from "react";
+import React from "react";
 import * as Yup from "yup";
 import ValidInput from "../common/ValidInput";
 import ValidTextArea from "../common/ValidTextArea";
+import { useCustomFormik } from "../../hooks/useCastomFormik";
 
 const ServiceValidationSchema = Yup.object().shape({
   serviceName: Yup.string()
@@ -14,17 +14,12 @@ const ServiceValidationSchema = Yup.object().shape({
 });
 
 const ServiceForm = ({ setSubmitHandler, setService, service }) => {
-  const { handleSubmit, submitForm, ...formik } = useFormik({
+  const { handleSubmit, ...formik } = useCustomFormik({
     initialValues: service,
     validationSchema: ServiceValidationSchema,
-    onSubmit: (values) => {
-      setService(values);
-    },
+    setSubmitHandler,
+    submitCallback: setService,
   });
-
-  useEffect(() => {
-    setSubmitHandler(() => submitForm);
-  }, []);
 
   return (
     <Form
@@ -38,7 +33,6 @@ const ServiceForm = ({ setSubmitHandler, setService, service }) => {
         label="Название магазина"
         formik={formik}
       />
-
       <ValidTextArea
         formik={formik}
         name="serviceDescription"
