@@ -11,7 +11,7 @@ const ServiceValidationSchema = Yup.object().shape({
     .max(500, "Слишком длинное")
     .required("Ведите имя сервиса"),
   serviceDescription: Yup.string().min(3, "Введите больше трех символов!"),
-});
+}); 
 
 const ServiceForm = ({ setSubmitHandler, setService, service }) => {
   const { handleSubmit, ...formik } = useCustomFormik({
